@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Course Client</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="js/mustache.js"></script>
+    <script src="js/main.js"></script>
+  </head>
+  <body>
+    <script id="company-listing" type="x-tmpl-mustache">
+    <div id="company_{{name}}" class="company">
+    <h2>{{name}}</h2>
+    <p>Likes: {{likes}}</p>
+    <a data-c-id={{id}}>Like</a>
+    <p>
+    {{products}}
+    </p>
+    </div>
+    </script>
+    <div id="companies"></div>
+
+    <script>
+    $(document).ready(function(){
+      $("div.company").hide();
+      $("div.company").each(function(i){
+        var me = $(this);
+        setTimeout(function(){ $(me).fadeIn(1000); }, (1000 * i));
+      });
+    });
+    </script>
+  </body>
+</html>

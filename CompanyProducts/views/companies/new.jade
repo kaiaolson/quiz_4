@@ -1,0 +1,12 @@
+extends ../layout
+
+block content
+  h1 New Company
+  form(action="/companies" method="POST")
+    .form-group(class="#{errors.name ? 'has-error' : ''}")
+      label(for="name") Name
+      input(name="name" id="name" type="text" class="form-control")
+    .form-group(class="#{errors.products ? 'has-error' : ''}")
+      label(for="products") Products
+      textarea(class="form-control" name="products" id="products")
+    input(type="submit" value="Create Company" class="btn btn-primary")

@@ -1,0 +1,11 @@
+extends ../layout
+
+block content
+  h1= company.name
+  ul
+    each val in company.products
+      li= val.name
+  a(href="/companies" class="btn btn-info") View All Companies
+  a(href="/companies/" + company.id + "/edit" class="btn btn-warning") Edit
+  form(action="/companies/#{company._id}?_method=delete" method="POST")
+    input(type="submit" class="btn btn-danger" value="Delete")

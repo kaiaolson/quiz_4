@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>CompanyProducts</title>
+    <script src="js/react.js"></script>
+    <script src="js/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  </head>
+  <body>
+    <div id="container"></div>
+    <script type="text/babel">
+      var CompanyProducts = React.createClass({
+        getInitialState: function(){
+          return {companies: []};
+        },
+        componentDidMount: function(){
+          $.ajax({
+            url: "http://localhost:3000/api/v1/companies",
+            method: "GET",
+            error: function(){
+              alert("Failed to load. Please try again.");
+            },
+            success: function(data){
+              this.setState({companies: data.companies});
+            }.bind(this)
+          })
+        },
+        companiesDisplay: function(){
+          if(this.state.companies.length > 0) {
+            return this.state.companies.map(function(company, index){
+              return <Company name={company.name} products={company.products} likes={company.likes} key={index}/>
+            });
+          } else {
+            return "Loading...";
+          }
+        },
+        render: function(){
+          return <div>
+                  <h1>Welcome to CompanyProducts</h1>
+                  {this.companiesDisplay()}
+                 </div>;
+        }
+      });
+
+      var Company = React.createClass({
+        getInitialState: function(){
+          return {likes: this.props.likes}
+        },
+        addLike: function(){
+          var newLikes = this.state.likes += 1;
+          this.setState({likes: newLikes})
+        },
+        products: function(){
+          function intersperse(arr, sep) {
+            if (arr.length === 0) {
+                return [];
+            }
+            return arr.slice(1).reduce(function(xs, x, i) {
+                return xs.concat([sep, x]);
+            }, [arr[0]]);
+          }
+          var products = this.props.products.map(function(product, index){
+            return <Product name={product} key={index}/>
+          });
+          return intersperse(products, ", ");
+        },
+        render: function(){
+          return <div><h3>{this.props.name}</h3><a onClick={this.addLike}>Like</a><p>Likes: {this.state.likes}</p>{this.products()}<hr></hr></div>;
+        }
+      });
+
+      var Product = React.createClass({
+        render: function(){
+          return <span>{this.props.name}</span>;
+        }
+      });
+
+      ReactDOM.render(<CompanyProducts/>, document.getElementById("container"));
+    </script>
+  </body>
+</html>

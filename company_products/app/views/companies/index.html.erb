@@ -1,0 +1,10 @@
+<% @companies.each do |company| %>
+<h2><%= company.name %></h2>
+<%= link_to "Like", company_path(company), method: :patch %>
+<p>Likes: <%= company.likes %></p>
+<ul>
+  <% company.products.each do |product| %>
+    <li><%= product.name %></li>
+  <% end %>
+</ul>
+<% end %>
