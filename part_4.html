@@ -19,15 +19,5 @@
     </div>
     </script>
     <div id="companies"></div>
-
-    <script>
-    $(document).ready(function(){
-      $("div.company").hide();
-      $("div.company").each(function(i){
-        var me = $(this);
-        setTimeout(function(){ $(me).fadeIn(1000); }, (1000 * i));
-      });
-    });
-    </script>
   </body>
 </html>
